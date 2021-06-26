@@ -1,0 +1,30 @@
+#!/usr/bin/env bash
+
+# Get private IP address
+PRIVATE_IP=`ip route get 8.8.8.8 | sed -n '/src/{s/.*src *\([^ ]*\).*/\1/p;q}'`
+
+# Remove the conf file and checkout the example file
+if test -f "./nginx/nginx.conf"
+then
+    rm ./nginx/nginx.conf
+fi
+
+git checkout ./nginx/nginx.conf.example
+
+# Replace the private_ip variable with the device private IP
+sed -i "s/private_ip/${PRIVATE_IP}/g" ./nginx/nginx.conf.example
+cp ./nginx/nginx.conf.example ./nginx/nginx.conf
+
+# Checkout the example file for future use
+git checkout ./nginx/nginx.conf.example
+
+# Start docker container
+docker-compose up -d --remove-orphans
+echo "
+================== 🚀 Laravel Development Instances 🚀 =================
+
+            Laravel:        http://laravel.local/
+            PHPMyAdmin:     http://pma.local/
+            Mailhog:        http://mh.local/
+      
+===================== 🚀 Build Something Amazing 🚀 ==================="

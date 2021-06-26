@@ -1,0 +1,27 @@
+events { }
+
+http {
+    server {
+	    server_name laravel.local;
+	    location / {
+	    	proxy_pass http://private_ip:7010;
+	    	rewrite ^/laravel(.*)$ $1 break;
+	    }
+    }
+
+    server {
+	    server_name mh.local;
+	    location / {
+	    	proxy_pass http://private_ip:8025;
+	    	rewrite ^/mailhog(.*)$ $1 break;
+	    }
+    }
+
+    server {
+	    server_name pma.local;
+	    location / {
+	    	proxy_pass http://private_ip:8080;
+	    	rewrite ^/phpmyadmin(.*)$ $1 break;
+	    }
+    }
+}

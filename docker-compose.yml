@@ -1,0 +1,81 @@
+version: '3.5'
+
+services:
+  laravel:
+    image: dinhtp/8.0.7-composer2.1.1
+    command: apachectl -D FOREGROUND
+    volumes:
+      - ./src:/var/www/html
+    ports:
+      - 80:80
+    depends_on:
+      - mariadb
+    links:
+      - mariadb
+    hostname: laravel
+    container_name: laravel
+    networks:
+      - artisan-network
+
+  # Infrastructure Services
+  mariadb:
+    image: mariadb
+    ports:
+     - 3306:3306
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+    volumes:
+      - mariadb-data:/var/lib/mysql
+      - ./mariadb/init.sql:/docker-entrypoint-initdb.d/init.sql
+    container_name: mariadb
+    networks:
+      - artisan-network
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    restart: always
+    ports:
+     - 8080:80
+    environment:
+     - PMA_HOST=mariadb
+     - PMA_USER=root
+     - PMA_PASSWORD=root
+     - MYSQL_ROOT_PASSWORD=root
+    hostname: phpmyadmin
+    container_name: phpmyadmin
+    networks:
+      - artisan-network
+
+  nginx:
+    image: nginx:latest
+    restart: always
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf
+    ports:
+      - 80:80
+      - 443:443
+    expose:
+      - '80'
+      - '443'
+    container_name: nginx
+    networks:
+      - artisan-network
+
+  mailhog:
+    image: mailhog/mailhog
+    ports:
+      - 1025:1025
+      - 8025:8025
+    hostname: mailhog
+    container_name: mailhog
+    networks:
+      - artisan-network
+
+networks:
+  artisan-network:
+    driver: bridge
+
+volumes:
+  mariadb-data:
+    driver: local
+  
