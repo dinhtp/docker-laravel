@@ -2,12 +2,12 @@ version: '3.5'
 
 services:
   laravel:
-    image: dinhtp/8.0.7-composer2.1.1
+    image: dinhtp/php:8.0.7-composer2.1.1
     command: apachectl -D FOREGROUND
     volumes:
       - ./src:/var/www/html
     ports:
-      - 80:80
+      - 8888:80
     depends_on:
       - mariadb
     links:
