@@ -14,6 +14,7 @@ git checkout ./nginx/nginx.conf.example
 # Replace the private_ip variable with the device private IP
 sed -i "s/private_ip/${PRIVATE_IP}/g" ./nginx/nginx.conf.example
 cp ./nginx/nginx.conf.example ./nginx/nginx.conf
+chmod -R 777 ./nginx/nginx.conf
 
 # Checkout the example file for future use
 git checkout ./nginx/nginx.conf.example
