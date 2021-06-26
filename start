@@ -23,8 +23,8 @@ docker-compose up -d --remove-orphans
 echo "
 ================== 🚀 Laravel Development Instances 🚀 =================
 
-            Laravel:        http://laravel.local/
-            PHPMyAdmin:     http://pma.local/
-            Mailhog:        http://mh.local/
+            Laravel:     http://laravel.local/
+            PHPMyAdmin:  http://pma.local/
+            Mailhog:     http://mh.local/
       
 ===================== 🚀 Build Something Amazing 🚀 ==================="

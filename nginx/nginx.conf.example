@@ -4,7 +4,7 @@ http {
     server {
 	    server_name laravel.local;
 	    location / {
-	    	proxy_pass http://private_ip:7010;
+	    	proxy_pass http://private_ip:8888;
 	    	rewrite ^/laravel(.*)$ $1 break;
 	    }
     }
