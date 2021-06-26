@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+if [ -z "$1" ]
+  then
+    docker-compose exec --user www-data laravel bash
+else
+    docker-compose exec --user $@ laravel bash
+fi
